@@ -29,15 +29,19 @@
 * The card is laid out --
     * Top-left for pagination and player demographics
     * Top-right for a date filter (external library)
-    * **Might ditch it as a roadmap todo if it gets annoying**
+    * I **might ditch it as a roadmap todo if it gets annoying**
     * Stats table on the next roe, filterable
         * The AVG, OBP, SLG, and OPS increment up
         * The other stats are static
     * A totals mini-table at the bottom
         * Totals for only the filtered range of games
-* Chaining the API calls was a more work than it should've been
+* Chaining the API calls was a little more work than it should've been
+* Built a static, then dynamic-with-static-data, then a dynamic version to not overdo API calls
+* Arrow keys also paginate
+* React/Vue would be nice for hooks, but I would have analysis paralysis on decisions
 
 ## Todo
+* Not responsive
 * This in React or Vue
 * I think I can do better on the top/bottom of the stats table -- some kind of gradient fade to indicate scroll-ability
 * The data totaling could be a more optimized version of itself

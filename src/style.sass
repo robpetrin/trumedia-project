@@ -16,13 +16,13 @@ body
 	background-image: linear-gradient(315deg, #20bf55 0%, #01baef 74%)
 
 // Buttons
-
-
-
 #prev-player, #next-player
 	border: 0
-	padding: 0 1em
+	font-weight: 300
+	font-family: 'Merriweather Sans', sans-serif
+	padding: 0 0.25em
 	background: none
+	text-transform: uppercase
 	&:hover
 		cursor: pointer
 		text-decoration: underline
@@ -35,11 +35,16 @@ body
 	&::after
 		content: ' →'
 
+// Images
+
+.opponent-image
+	max-height: 2em
+
 // Inline & HR
 
 .stats-filter > span
 	display: inline-block
-	margin-left: 1em
+	margin-left: 0.5em
 	transition: transform 0.25s
 	&:hover
 		transform: rotate(-45deg)
@@ -73,7 +78,7 @@ hr
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
 	display: grid
 	grid-template-columns: 1fr fit-content
-	grid-template-rows: 5em 1fr 3.75em
+	grid-template-rows: 6em 1fr 3.75em
 	gap: 0px 0px
 	grid-auto-flow: row
 	grid-template-areas: "demographics filter" "stats-table stats-table" "totals totals"
@@ -91,18 +96,18 @@ hr
 	display: flex
 	justify-content: space-between
 	align-items: flex-end
+	padding-bottom: 0.25em
 	img
 		max-height: 5em
 
-.player-name
-	font-size: 1.75em
+#player-name
+	font-size: 1.5em
 	margin: 0
-	padding: 0
-	display: flex
-	gap: 1em
-	align-items: center
+	padding: 0	
+	min-width: 12em
+	text-align: center
 
-.player-photo
+#player-photo
 	margin-bottom: -0.25em
 
 .stats-filter
@@ -127,23 +132,6 @@ hr
 table
   border-collapse: collapse
   width: 100%
-  position: relative
-  &::before
-    content: ''
-    position: sticky
-    top: 0
-    width: 100%
-    height: 1em
-    background: linear-gradient(white, rgba(255, 255, 255, 0.001))
-
-  &::after
-    content: ''
-    position: sticky
-    bottom: 0
-    width: 100%
-    height: 1em
-    background: linear-gradient(rgba(255, 255, 255, 0.001), white)
-
 
 .stats-table
   -ms-overflow-style: none
@@ -155,6 +143,12 @@ td, th
 	text-align: center
 	padding: 0.375em
 
+td:first-of-type
+	text-transform: none
+
+td:last-of-type
+	width: 50px
+
 .stats-table tr:nth-child(even)
   background-color: hsla(0, 0%, 87%, 0.5)
 
@@ -165,3 +159,9 @@ tr, .stats-table tr:nth-child(even)
 
 td
 	font-weight: 300
+
+.opponent-row
+	display: flex
+	align-items: center
+	justify-content: center
+	gap: 0.5em

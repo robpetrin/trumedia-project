@@ -1,9 +1,60 @@
-// Date Picker Element
-var picker = new Lightpick({ 
-    field: document.getElementById('datepicker'),
-    singleDate: false,
-    format: 'MMMM DD'
-});
+// import key from './../apiKey'
+
+// Global Variables
+
+// Show the first player on load
+let activeIndex = 1
+// Could remember in a future iteration
+// Should ideally read from the URL if those player IDs are universal
+
+// First API call provides me a token
+let token = ''
+
+// Second API call provies me a list of players
+let players = []
+
+// Third API call provides me gamelog data for a particular player
+let playerStats
+// So I'll iterate across this one three times
+
+// Pagination Logic
+function goPrev() {
+  let newIndex
+  if (activeIndex > 0) {
+    newIndex = activeIndex - 1
+  } else {
+    newIndex = 2
+  }
+  activeIndex = newIndex
+  redraw(staticStats[activeIndex])
+}
+
+function goNext() {
+  let newIndex
+  if (activeIndex < 2) {
+    newIndex = activeIndex + 1
+  } else {
+    newIndex = 0
+  }
+  activeIndex = newIndex
+  redraw(staticStats[activeIndex])
+}
+
+// Use Arrow Keys to Paginate
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '37') {
+       goPrev()
+    }
+    else if (e.keyCode == '39') {
+       goNext()
+    }
+
+}
 
 // API Calls
 async function getToken() {
@@ -13,7 +64,7 @@ async function getToken() {
 
     let xhr = new XMLHttpRequest()
     xhr.open("GET", url)    
-    xhr.setRequestHeader("apiKey", apiKey)
+    xhr.setRequestHeader("apiKey", key)
     
     xhr.onreadystatechange = function () {
        if (xhr.readyState === 4) {
@@ -26,7 +77,7 @@ async function getToken() {
 }
 
 async function getPlayers(token) {
-
+    // Just get the list of players, throw them into an array named players
     let url = "https://project.trumedianetworks.com/api/mlb/players"
     let players = {}
 
@@ -44,9 +95,14 @@ async function getPlayers(token) {
     xhr.send()
 }
 
+async function getPlayerStats(players) {
+  // API call for each player
+  // Adding their gamelogs to an object
+}
+
 // getToken()
 // getPlayers(token))
-// getPlayerStats([])
+// getPlayerStats(player)
 
 let staticStats = [
     [
@@ -9217,6 +9273,147 @@ let staticStats = [
       ]
 ]
 
-function redraw(player, obj) {
+function redraw(player) {
+  // API call to get all of the player data
+  // Ideally would be cached to not have to redo the call for the same info
+  // But individual calls still more optimal than downloading all player data if it's hundreds of players
 
+  // Demographics
+  let playerName = document.querySelector('#player-name')
+  let playerPhoto = document.querySelector('#player-photo')
+  let playerTeam = document.querySelector('#player-team')
+
+  playerName.textContent = player[0].fullName
+  playerPhoto.src = player[0].playerImage
+  playerTeam.src = player[0].teamImage
+
+  // Populate Stats Table
+  appendGameLogs(player)
+
+  // Totals Calculations
+  let playerTotals = document.querySelector('#player-totals')
 }
+
+// Special Treatment for Game Log Appending
+// Can be triggered from pagination or date filter
+function appendGameLogs(gameSet) {
+  let playerStatTable = document.querySelector('#player-stat-table')
+  playerStatTable.innerHTML = ''
+  let filteredGameLog = gameSet
+  // check for date filter
+  // if dateFiler(true) {}
+  playerStatTable.innerHTML = ''
+  playerStatTable.innerHTML += `<tr>
+                                  <th>Date</th>
+                                  <th>Opp</th>
+                                  <th>PA</th>
+                                  <th>AB</th>
+                                  <th>H</th>
+                                  <th>HR</th>
+                                  <th>RBI</th>
+                                  <th>BB</th>
+                                  <th>K</th>
+                                  <th>AVG</th>
+                                  <th>OBP</th>
+                                  <th>SLG</th>
+                                  <th>OPS</th> 
+                                </tr>`
+  
+  // Totals for Derived Stats and Totals Table
+  let gamesPlayed = 0
+  let plateAppearances = 0
+  let atBats = 0
+  let hits = 0
+  let homeRuns = 0
+  let runsBattedIn = 0
+  let basesOnBalls = 0
+  let strikeouts = 0
+  let hitByPitch = 0
+  let sacFlies = 0
+  let totalBases = 0
+  let battingAverage = 0
+  let onBasePercentage = 0
+  let sluggingPercentage = 0 
+  let onBasePlusSlugging = 0
+
+  filteredGameLog.forEach(game => {
+  // Running Stat Tally
+  gamesPlayed++
+  plateAppearances += game.PA
+  atBats += game.AB
+  hits += game.H
+  homeRuns += game.HR
+  runsBattedIn += game.RBI
+  basesOnBalls += game.BB
+  strikeouts += game.K
+  hitByPitch += game.HBP
+  sacFlies += game.SF
+  totalBases += game.TB
+  battingAverage = (hits / atBats).toFixed(3).toString()
+  let prettyBattingAverage = prettifyPercentage(battingAverage)
+  onBasePercentage = ((hits + basesOnBalls + hitByPitch) / (atBats + basesOnBalls + sacFlies + hitByPitch)).toFixed(3).toString()
+  let prettyOnBasePercentage = prettifyPercentage(onBasePercentage)
+  sluggingPercentage = (totalBases / atBats).toFixed(3).toString()
+  let prettySluggingPercentage = prettifyPercentage(sluggingPercentage)
+  let onBasePlusSlugging = prettifyPercentage((Number(onBasePercentage) + Number(sluggingPercentage)).toFixed(3).toString())
+
+  // Formatting percentages with/without leading digit
+  function prettifyPercentage(stat) {
+    return (stat[0] === "0")? stat.substring(1) : stat
+  }
+
+  // Populate Totals Table
+  let playerTotals = document.querySelector('#player-totals')
+  playerTotals.innerHTML = ''
+  playerTotals.innerHTML = `
+                        <td>${gamesPlayed}</td>
+                        <td>${plateAppearances}</td>
+                        <td>${atBats}</td>
+                        <td>${hits}</td>
+                        <td>${homeRuns}</td>
+                        <td>${runsBattedIn}</td>
+                        <td>${basesOnBalls}</td>
+                        <td>${strikeouts}</td>
+                        <td>${prettyBattingAverage}</td>
+                        <td>${prettyOnBasePercentage}</td>
+                        <td>${prettySluggingPercentage}</td>
+                        <td>${onBasePlusSlugging}</td>                      
+                            `
+
+  // Populate the Stat Table
+  playerStatTable.innerHTML += `<tr>
+                                  <td>${moment(game.gameDate).format('MMM D')}</td>
+                                  <td class="opponent-row">
+                                    <img class="opponent-image" src="${game.opponentImage}">
+                                    <span>${game.opponent}</span>  
+                                  </td>
+                                  <td>${game.PA}</td>
+                                  <td>${game.AB}</td>
+                                  <td>${game.H}</td>
+                                  <td>${game.HR}</td>
+                                  <td>${game.RBI}</td>
+                                  <td>${game.BB}</td>
+                                  <td>${game.K}</td>
+                                  <td>${prettyBattingAverage}</td>
+                                  <td>${prettyOnBasePercentage}</td>
+                                  <td>${prettySluggingPercentage}</td>
+                                  <td>${(onBasePlusSlugging)}</td>
+                                </tr>`
+  })
+}
+
+redraw(staticStats[activeIndex])
+
+// External Libraries
+
+// Date Picker Element
+let openingDay = moment('2018-03-29')
+let endRegSeason = moment('2018-10-01')
+
+var picker = new Lightpick({ 
+  field: document.getElementById('datepicker'),
+  singleDate: false,
+  format: 'MMMM DD',
+  minDate: openingDay,
+  maxDate: endRegSeason
+})
