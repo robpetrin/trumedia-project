@@ -1,11 +1,5 @@
 # Statistical Analysis Project
 
-## API Key (not in GitHub)
-* Edit apiKey-example.js
-* Replace **MY-API-KEY** with your API key
-* Rename it to apiKey.js
-* You're done!
-
 ## MLB Batter Comparison
 * Explore prototyping and front-end dev in sports analytics context
 * Create an interactive tool to view MLB batter <s>or NFL QB</s> performance over time
@@ -19,7 +13,7 @@
 * I'm not going to explicitly show HBP, SF, or TB (not commonly on game logs or box scores or whatever)
 
 ## Methodology
-* Compact but functional and untuitive UI
+* Compact but functional and intuitive UI
 * Scaffolded in CodePen, built in Pug, Sass, and JS
 * Exported to expedite build process
 * Started on UI before diving into the API
@@ -39,23 +33,30 @@
 * Built a static, then dynamic-with-static-data, then a dynamic version to not overdo API calls
 * Arrow keys also paginate
 * React/Vue would be nice for hooks, but I would have analysis paralysis on decisions
+* Ideally I'd cache the API call to not have to query for the same info
+* But it's not reasonable to cache if it's hundreds of players
 
-## Todo
-* Not responsive
+## Todo (Assignment)
+* Dynamic API calls
+* Better comments
+
+## Todo (Roadmap)
+* Get way fancier with the scrollbars
+* Ideally the date range restrictions would be dynamic basic on the data sets, or I'd have access to the 2018 opening/ending dates to structure that logic
+* make it responsive
+* Modularize it as part of a re-factor
 * This in React or Vue
+* Dynamic Gradient Based on Two Most Dominant Colors in Team Logo
 * I think I can do better on the top/bottom of the stats table -- some kind of gradient fade to indicate scroll-ability
 * The data totaling could be a more optimized version of itself
 * Some optimizations are based on whether this is a static tool, or a component of a more fully-featured application. But more catering to either use-case is generally needed
 * If viewing an unfiltered data set, sorting on the table would be useful
+* Smoother transitions when changing players -- loading indicator?
 
 ## Dependencies
 * [Google Fonts](https://fonts.google.com/specimen/Merriweather+Sans)
 * [Gradient (Global Warming)](https://www.eggradients.com/category/green-gradient)
 * [Box Shadow (3)](https://getcssscan.com/css-box-shadow-examples)
 * [Grids](https://grid.layoutit.com/)
-* [Date Picker](https://wakirin.github.io/Lightpick/)
+* [Date Picker](https://litepicker.com/docs)
 * [API Requests](https://reqbin.com/)
-* []()
-* []()
-* []()
-* []()

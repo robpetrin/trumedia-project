@@ -29,38 +29,40 @@ body
 
 #prev-player
 	&::before
-		content: '← '
+		content: '🡐 '
 
 #next-player
 	&::after
-		content: ' →'
+		content: ' 🡒'
+.reset-button
+	display: inline-block
+	transition: transform 0.25s
+	border: none
+	background: none
+	width: 20%
+	&:hover
+		transform: rotate(-45deg)
+		cursor: pointer
 
 // Images
 
 .opponent-image
 	max-height: 2em
 
-// Inline & HR
+#player-photo
+	max-height: 5em
 
-.stats-filter > span
-	display: inline-block
-	margin-left: 0.5em
-	transition: transform 0.25s
-	&:hover
-		transform: rotate(-45deg)
-		cursor: pointer
+// Inline & HR
 
 input
 	margin-top: 0.5em
 	border-radius: 1em
-	width: 70%
+	width: 50%
 	height: 1.75em
 	cursor: pointer
 	text-align: center
 	font-family: 'Merriweather Sans', sans-serif
 	font-size: 0.9rem
-	&:hover
-		filter: invert(1)
 
 hr
 	border-top: 1px solid black
@@ -97,13 +99,22 @@ hr
 	justify-content: space-between
 	align-items: flex-end
 	padding-bottom: 0.25em
+
+.player-team-details
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	gap: 0.25em
+	span
+		font-size: 0.9rem
 	img
-		max-height: 5em
+		height: 3em
 
 #player-name
 	font-size: 1.5em
 	margin: 0
-	padding: 0	
+	padding: 0 1em
 	min-width: 12em
 	text-align: center
 
@@ -152,7 +163,7 @@ td:last-of-type
 .stats-table tr:nth-child(even)
   background-color: hsla(0, 0%, 87%, 0.5)
 
-tr, .stats-table tr:nth-child(even)
+tr, .stats-table tr:nth-child(even), input
 	&:hover
 		background-color: hsla(0,0,0,0.8)
 		color: white
@@ -165,3 +176,19 @@ td
 	align-items: center
 	justify-content: center
 	gap: 0.5em
+
+// Date Picker Overrides
+.litepicker
+	font-family: 'Merriweather Sans', sans-serif
+
+.litepicker .container__days .day-item.is-start-date, 
+.litepicker .container__days .day-item.is-end-date
+	background-color: hsla(0,0,0,0.8)
+
+.litepicker .container__days .day-item.is-in-range
+	background-color: hsla(0,0,0,0.5)
+
+.litepicker .container__days .day-item.is-start-date, 
+.litepicker .container__days .day-item.is-end-date,
+.litepicker .container__days .day-item.is-in-range
+	color: white
