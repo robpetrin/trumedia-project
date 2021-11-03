@@ -166,7 +166,9 @@ function drawPage() {
         })
 
         // Empty the table
-        playerStatTable.innerHTML = ''
+        while (playerStatTable.firstChild) {
+            playerStatTable.removeChild(playerStatTable.firstChild);
+        }
         // Add its heading back
         playerStatTable.innerHTML += `<tr>
                                   <th>Date</th>
@@ -230,21 +232,28 @@ function drawPage() {
             // Populate totals table
             let playerTotals = document.querySelector('#player-totals')
             // Empty table in case there's content in it
-            playerTotals.innerHTML = ''
-            playerTotals.innerHTML = `
-                          <td>${gamesPlayed}</td>
-                          <td>${plateAppearances}</td>
-                          <td>${atBats}</td>
-                          <td>${hits}</td>
-                          <td>${homeRuns}</td>
-                          <td>${runsBattedIn}</td>
-                          <td>${basesOnBalls}</td>
-                          <td>${strikeouts}</td>
-                          <td>${prettyBattingAverage}</td>
-                          <td>${prettyOnBasePercentage}</td>
-                          <td>${prettySluggingPercentage}</td>
-                          <td>${onBasePlusSlugging}</td>                      
-                              `
+            while (playerTotals.firstChild) {
+                playerTotals.removeChild(playerTotals.firstChild);
+            }
+            let totalStats = [
+                gamesPlayed,
+                plateAppearances,
+                atBats,
+                hits,
+                homeRuns,
+                runsBattedIn,
+                basesOnBalls,
+                strikeouts,
+                prettyBattingAverage,
+                prettyOnBasePercentage,
+                prettySluggingPercentage,
+                onBasePlusSlugging
+            ]
+            totalStats.forEach(stat => {
+                let td = document.createElement('td')
+                td.append(stat)
+                playerTotals.append(td)
+            })
 
             // Populate the stat table
             playerStatTable.innerHTML += `<tr>
