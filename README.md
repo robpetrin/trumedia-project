@@ -13,9 +13,12 @@
 * I'm not going to explicitly show HBP, SF, or TB (not commonly shown on game logs or standard box scores)
 
 ## Caveats
-* Functional in Desktop only, and Chrome/Firefox/Edge only
+* Functional in Desktop only, and Chrome/Firefox only
 * It "works" in Chrome and Firefox on Android, but UI is not responsive
 * Essentially it doesn't play nice in any Safari, or on iOS Chrome
+* This appears to be because of the use of innerHTML
+* I attempted to re-factor to use createElement and append but those didn't work either
+* This is a cautionary tale of choosing vanilla JS over React or Vue (see below for why I did though)
 
 ## Methodology
 * The goal was a compact but functional and intuitive UI
