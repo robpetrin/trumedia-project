@@ -12,6 +12,11 @@
 * And counting stats (PA, AB, H, HR, BB, K, RBI)
 * I'm not going to explicitly show HBP, SF, or TB (not commonly shown on game logs or standard box scores)
 
+## Caveats
+* Desktop only, and Chrome/Firefox/Edge only
+* It "works" in Chrome and Firefox on Android, but UI is not responsive
+* Essentially it doesn't play nice in any Safari, or on iOS Chrome
+
 ## Methodology
 * The goal was a compact but functional and intuitive UI
 * Scaffolded in CodePen, built with Pug, Sass, and JS
