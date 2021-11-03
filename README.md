@@ -13,7 +13,7 @@
 * I'm not going to explicitly show HBP, SF, or TB (not commonly shown on game logs or standard box scores)
 
 ## Caveats
-* Desktop only, and Chrome/Firefox/Edge only
+* Functional in Desktop only, and Chrome/Firefox/Edge only
 * It "works" in Chrome and Firefox on Android, but UI is not responsive
 * Essentially it doesn't play nice in any Safari, or on iOS Chrome
 
