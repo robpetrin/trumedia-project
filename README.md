@@ -44,7 +44,7 @@
 * Fancier scrollbars
 * Table heading should be sticky as you scroll
 * Make it responsive
-* Team Logo becomes Dynamic Gradient on <body>
+* Team Logo becomes Dynamic Gradient on `<body>`
 * Buffer gradient at top/bottom of table to indicate scroll
 * Table sorting, including for dates (ensure it is not alphabetical)
 * Smoother transitions when changing players -- loading indicator?
